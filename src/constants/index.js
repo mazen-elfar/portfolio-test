@@ -65,7 +65,8 @@ export const perks = [
     "css-3.png", "esc.png", "ai.png", "js.png", "bootstrap.png",
     "github-sign.png", "HTML.png", "pay.png", "shopify.png",
     "react.png", "figma.png", "vsc.jpg", "tailpng.png", "npm.png",
-    "chat.jpg", "illustrator.png","py.jpg","Vite.jpg"
+    "chat.jpg", "illustrator.png","py.jpg","Vite.jpg","database.png",
+    "php.png","Node.png","mysql.png","laravel.png","ASP.png","Dashboard.png"
   ];
 
 const words = [
@@ -233,6 +234,19 @@ const expCards = [
       "Contributed to open-source projects that were used with the Docker ecosystem.",
     ],
   },
+  {
+  review: "Mazen led the project from concept to completion, handling both frontend and backend development. His positive attitude and ability to solve complex challenges resulted in a high-quality, scalable solution.",
+  imgPath: "/images/worm.png",
+  logoPath: "/images/title-worm.png",
+  title: "Full-Stack Developer",
+  date: "June 2022",
+  responsibilities: [
+    "Designed and developed the project from scratch, handling both frontend and backend architecture.",
+    "Built responsive and user-friendly interfaces while ensuring clean and maintainable code.",
+    "Developed and integrated backend APIs, handling data flow, authentication, and business logic.",
+    "Collaborated on deploying and maintaining the application with a focus on performance and scalability."
+  ],
+}
   
 ];
 
