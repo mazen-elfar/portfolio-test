@@ -17,7 +17,7 @@ function Footer() {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="https://github.com/alfar-programer" 
+                href="https://github.com/mazen-elfar" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-400 transition-colors"

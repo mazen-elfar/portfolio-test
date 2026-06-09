@@ -11,23 +11,6 @@ function About() {
   const skillRef = useRef(null);
   const sectionRef = useRef(null);
 
-  // Mouse glow effect for perks
-  useEffect(() => {
-    const handler = (e) => {
-      const cards = document.getElementsByClassName("perks_item");
-      for (const card of cards) {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty("--mouse-x", `${x}px`);
-        card.style.setProperty("--mouse-y", `${y}px`);
-      }
-    };
-    const current = perksListRef.current;
-    if (current) current.addEventListener("mousemove", handler);
-    return () => current && current.removeEventListener("mousemove", handler);
-  }, []);
-
   // Mousemove effect for skills section
   useEffect(() => {
     const skillSection = sectionRef.current;
@@ -53,27 +36,7 @@ function About() {
     };
   }, []);
 
-  // GSAP animation for perks
-  useEffect(() => {
-    gsap.fromTo(
-      ".perks_item",
-      {
-        y: 100,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.1,
-        duration: .5,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: perksListRef.current,
-          start: "top 80%"
-        }
-      }
-    );
-  }, []);
+
 
   
 
