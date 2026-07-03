@@ -7,58 +7,58 @@ const projectsData = [
     title: "Al-Hurriya",
     image: "media/Al-Hurriya.png",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem laudantium cumque voluptas maiores ex amet inventore quas accusamus iusto fuga odio velit error natus, aliquam, pariatur cum, est officiis et.",
+      "A modern corporate website developed with a strong focus on performance, responsive design, and user experience. The project features a clean interface, optimized layouts, and seamless navigation across all devices..",
     link: "https://al-horria.com/home",
   },
   {
-    title: "Store",
-    image: "media/Coza-Store-Free-HTML5-eCommerce-Website-Template-1.jpg",
+    title: "Warm Touch",
+    image: "images/warm.png",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, quibusdam voluptatem aspernatur hic ab numquam fuga voluptatum illo repellendus ratione iste reiciendis provident accusantium ut impedit possimus necessitatibus voluptas quas?",
-    link: "https://abdelrahmankhattab.github.io/store/",
-  },
-  {
-    title: "App Web",
-    image: "media/app.png",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
-    link: "https://abdelrahmankhattab.github.io/app/",
+      "A fully functional e-commerce platform designed for handcrafted products. It includes product browsing, category management, shopping cart functionality, secure authentication, and an intuitive admin dashboard for managing the store.",
+    link: "https://www.warmtotuch.store/",
   },
   {
     title: "Coffee Shop",
     image: "/images/project3.png",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
-    link: "https://alfar-programer.github.io/coffee/",
+    link: "https://mazen-elfar.github.io/coffee/",
   },
   {
     title: "Shoes Store",
     image: "/images/project2.png",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
-    link: "https://alfar-programer.github.io/shoes-store/",
+    link: "https://mazen-elfar.github.io/shoes-store/",
   },
   {
     title: "Gym Website",
     image: "/images/project1.png",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
-    link: "https://alfar-programer.github.io/gym2/",
+    link: "https://mazen-elfar.github.io/gym2/",
   },
   {
     title: "Restaurant",
     image: "/images/project4.png",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
-    link: "https://alfar-programer.github.io/restaurant/",
+    link: "https://mazen-elfar.github.io/restaurant/",
   },
   {
     title: "Gym Website",
     image: "/images/project5.png",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
-    link: "https://alfar-programer.github.io/GYM/",
+    link: "https://mazen-elfar.github.io/GYM/",
   },
+   {
+  title: "Focus",
+  image: "images/focus.png",
+  description:
+    "A premium corporate website built for a leading power generation company, featuring modern UI/UX, responsive layouts, advanced performance optimization, SEO best practices, and a professional showcase of generators, energy solutions, industrial automation, and engineering services.",
+  link: "https://focus-five-gamma.vercel.app/",
+},
 ];
 
 function Projects() {
