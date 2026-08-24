@@ -1,223 +1,328 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import "../components/Projects.css";
-import gsap from "gsap";
 
 const projectsData = [
   {
-    title: "Al-Hurriya",
-    image: "media/Al-Hurriya.png",
-    description:
-      "A modern corporate website developed with a strong focus on performance, responsive design, and user experience. The project features a clean interface, optimized layouts, and seamless navigation across all devices..",
-    link: "https://al-horria.com/home",
-  },
-  {
-    title: "Warm Touch",
+    id: "warm-touch",
+    title: "Warm Touch E-Commerce",
+    category: "E-Commerce",
     image: "images/warm.png",
     description:
-      "A fully functional e-commerce platform designed for handcrafted products. It includes product browsing, category management, shopping cart functionality, secure authentication, and an intuitive admin dashboard for managing the store.",
+      "A fully functional e-commerce platform designed for handcrafted products. Includes product browsing, category management, shopping cart functionality, secure checkout, and an intuitive store administration system.",
     link: "https://www.warmtotuch.store/",
+    tech: ["Full-Stack", "E-Commerce", "Admin Dashboard", "REST API"],
+    featured: true,
   },
   {
-    title: "Coffee Shop",
+    id: "focus",
+    title: "Focus Power Generation",
+    category: "Corporate",
+    image: "images/focus.png",
+    description:
+      "A premium corporate web platform built for a leading power generation company, featuring modern UI/UX, responsive layouts, advanced performance optimization, SEO best practices, and a professional showcase of generators and industrial energy solutions.",
+    link: "https://focus-five-gamma.vercel.app/",
+    tech: ["React", "Tailwind CSS", "Vite", "SEO Optimized", "Performance"],
+    featured: false,
+  },
+  {
+    id: "al-hurriya",
+    title: "Al-Hurriya Corporate",
+    category: "Corporate",
+    image: "media/Al-Hurriya.png",
+    description:
+      "A modern corporate website developed with a strong focus on high speed performance, responsive design, and intuitive user navigation across desktop and mobile devices.",
+    link: "https://al-horria.com/home",
+    tech: ["React", "HTML5/CSS3", "JavaScript", "Responsive Design"],
+    featured: false,
+  },
+  {
+    id: "coffee-shop",
+    title: "Artisanal Coffee Shop",
+    category: "Web App",
     image: "/images/project3.png",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
+      "An interactive landing page and menu application for an artisanal coffee roastery, featuring dynamic beverage ordering showcases and rich visual aesthetics.",
     link: "https://mazen-elfar.github.io/coffee/",
+    tech: ["HTML5", "CSS3", "JavaScript", "UI Animations"],
+    featured: false,
   },
   {
-    title: "Shoes Store",
+    id: "shoes-store",
+    title: "Footwear Storefront",
+    category: "E-Commerce",
     image: "/images/project2.png",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
+      "A dynamic footwear e-commerce storefront with interactive product filtering, gallery previews, cart state management, and modern responsive styling.",
     link: "https://mazen-elfar.github.io/shoes-store/",
+    tech: ["JavaScript", "CSS Grid", "E-Commerce UI", "Responsive"],
+    featured: false,
   },
   {
-    title: "Gym Website",
+    id: "gym-website",
+    title: "Fitness & Training Hub",
+    category: "Web App",
     image: "/images/project1.png",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
+      "A high-energy fitness platform showcasing class schedules, personal training packages, interactive membership calculators, and workout highlights.",
     link: "https://mazen-elfar.github.io/gym2/",
+    tech: ["JavaScript", "HTML5/CSS3", "Interactive UI", "Flexbox"],
+    featured: false,
   },
   {
-    title: "Restaurant",
+    id: "restaurant",
+    title: "Gourmet Restaurant Platform",
+    category: "Web App",
     image: "/images/project4.png",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
+      "An elegant culinary dining website featuring interactive food menus, online table booking layout, chef specials, and location information.",
     link: "https://mazen-elfar.github.io/restaurant/",
+    tech: ["JavaScript", "CSS3", "Responsive UI", "Web UX"],
+    featured: false,
   },
   {
-    title: "Gym Website",
+    id: "gym-pro",
+    title: "Power Gym Center",
+    category: "Web App",
     image: "/images/project5.png",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam ea nesciunt. Illum quae debitis consequuntur dicta perferendis, non, aliquid est nemo assumenda nobis expedita, molestiae similique. Maxime, modi quibusdam!",
+      "A modern fitness & bodybuilding center website engineered with responsive layouts, workout tracking previews, and interactive membership plans.",
     link: "https://mazen-elfar.github.io/GYM/",
+    tech: ["JavaScript", "CSS3", "Mobile First", "UI/UX"],
+    featured: false,
   },
-   {
-  title: "Focus",
-  image: "images/focus.png",
-  description:
-    "A premium corporate website built for a leading power generation company, featuring modern UI/UX, responsive layouts, advanced performance optimization, SEO best practices, and a professional showcase of generators, energy solutions, industrial automation, and engineering services.",
-  link: "https://focus-five-gamma.vercel.app/",
-},
 ];
 
+const categories = ["All", "Corporate", "E-Commerce", "Web App"];
+
 function Projects() {
-  const [current, setCurrent] = useState(0);
+  const [activeCategory, setActiveCategory] = useState("All");
   const [showModal, setShowModal] = useState(false);
-  const timeoutRef = useRef(null);
-  const slideRefs = useRef([]);
-  const prevIdx = useRef(0);
-  const modalRef = useRef(null);
 
-  // Auto-advance every 8 seconds
-  useEffect(() => {
-    const next = () => setCurrent((prev) => (prev + 1) % projectsData.length);
-    timeoutRef.current = setInterval(next, 8000);
-    return () => clearInterval(timeoutRef.current);
-  }, []);
+  // Filter projects by active tab
+  const filteredProjects =
+    activeCategory === "All"
+      ? projectsData
+      : projectsData.filter((p) => p.category === activeCategory);
 
-  // Reset timer function
-  const resetTimer = () => {
-    if (timeoutRef.current) {
-      clearInterval(timeoutRef.current);
-    }
-    const next = () => setCurrent((prev) => (prev + 1) % projectsData.length);
-    timeoutRef.current = setInterval(next, 8000);
-  };
-
-  // GSAP animation for all slides
-  useEffect(() => {
-    projectsData.forEach((_, idx) => {
-      if (idx === current) {
-        gsap.fromTo(
-          slideRefs.current[idx],
-          { opacity: 0, x: 100 },
-          { opacity: 1, x: 0, duration: 1, ease: "power2.out", pointerEvents: 'auto' }
-        );
-      } else if (idx === prevIdx.current) {
-        gsap.to(slideRefs.current[idx], { opacity: 0, x: -100, duration: 1, ease: "power2.in", pointerEvents: 'none' });
-      } else {
-        gsap.set(slideRefs.current[idx], { opacity: 0, x: 100, pointerEvents: 'none' });
-      }
-    });
-    prevIdx.current = current;
-  }, [current]);
-
-  // GSAP animation for modal
-  useEffect(() => {
-    if (showModal && modalRef.current) {
-      gsap.fromTo(
-        modalRef.current,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }
-      );
-    }
-  }, [showModal]);
-
-  const prevProject = () => {
-    setCurrent((prev) => (prev - 1 + projectsData.length) % projectsData.length);
-    resetTimer();
-  };
-  const nextProject = () => {
-    setCurrent((prev) => (prev + 1) % projectsData.length);
-    resetTimer();
-  };
+  // Featured project for spotlight
+  const featuredProject = projectsData.find((p) => p.featured) || projectsData[0];
 
   return (
-    <section  className="w-full flex flex-col items-center py-12 pt-20 bg-black min-h-[60vh]" id="work">
-      <div id="project" className="mb-8 text-center">
-        <h1 className="text-6xl font-bold text-white mb-2">Interactive Projects</h1>
-        <p className="text-lg text-gray-300">
-          <span className="font-semibold text-white">Explore real results</span> from our recent projects. Each solution delivered <span className="font-semibold text-white">measurable business impact</span> for our clients.
-        </p>
-      </div>
-      <div className="relative w-full max-w-7xl h-[600px] flex items-center justify-center bg-neutral-900 rounded-xl shadow-lg overflow-hidden transition-transform duration-500">
-        {/* Left Arrow */}
-        <button
-          className="absolute left-4 z-20 bg-neutral-800 hover:bg-neutral-700 text-white rounded-full p-2 transition"
-          onClick={prevProject}
-          aria-label="Previous Project"
+    <section className="projects-section" id="project">
+      <div className="projects-bg-glow" aria-hidden="true" />
+
+      <div className="projects-container">
+        {/* Header */}
+        <motion.div
+          className="projects-header"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          &#8592;
-        </button>
-        {/* Slides */}
-        {projectsData.map((project, idx) => (
-          <div
-            key={project.title}
-            ref={el => (slideRefs.current[idx] = el)}
-            className={`absolute top-0 left-0 w-full h-full flex flex-col md:flex-row items-center justify-center px-8 transition-all duration-500 ${idx === current ? 'z-10' : 'z-0 pointer-events-none'}`}
-            style={{ opacity: idx === current ? 1 : 0 }}
+          <span className="projects-eyebrow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            SELECTED WORK
+          </span>
+          <h2 className="projects-title">
+            Interactive <span className="projects-title-accent">Projects</span>
+          </h2>
+          <p className="projects-subtitle">
+            Explore real-world web applications and corporate digital platforms crafted with high technical precision and modern visual aesthetics.
+          </p>
+        </motion.div>
+
+        {/* Category Filter Bar */}
+        <div className="projects-filter-bar">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              className={`filter-btn ${activeCategory === cat ? "active" : ""}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Featured Project Spotlight (Shown when 'All' or 'Corporate' is selected) */}
+        {(activeCategory === "All" || activeCategory === featuredProject.category) && (
+          <motion.div
+            className="projects-spotlight"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="flex-shrink-0 w-150 h-100 flex items-center justify-center">
+            <div className="spotlight-img-wrap">
+              <span className="spotlight-badge">FEATURED SPOTLIGHT</span>
               <img
-                src={project.image}
-                alt={project.title}
-                className="object-cover rounded-lg w-full h-full shadow-md border-2 border-neutral-700"
+                src={featuredProject.image}
+                alt={featuredProject.title}
+                className="spotlight-img"
               />
             </div>
-            <div className="ml-0 md:ml-8 mt-6 md:mt-0 text-center md:text-left">
-              <h2 className="text-6xl font-bold text-white mb-12">{project.title}</h2>
-              <p className="text-gray-300 mb-12 max-w-md">{project.description}</p>
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                <button className="bg-blue-400 hover:bg-blue-500 text-white px-12 py-5 rounded transition font-semibold">Visit →</button>
+            <div className="spotlight-content">
+              <span className="spotlight-category">{featuredProject.category}</span>
+              <h3 className="spotlight-title">{featuredProject.title}</h3>
+              <p className="spotlight-desc">{featuredProject.description}</p>
+
+              <div className="spotlight-tech-stack">
+                {featuredProject.tech.map((t) => (
+                  <span key={t} className="tech-tag">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={featuredProject.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="visit-btn"
+              >
+                Visit Live Site
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </a>
             </div>
-          </div>
-        ))}
-        {/* Right Arrow */}
-        <button
-          className="absolute right-4 z-20 bg-neutral-800 hover:bg-neutral-700 text-white rounded-full p-2 transition"
-          onClick={nextProject}
-          aria-label="Next Project"
-        >
-          &#8594;
-        </button>
-      </div>
-      {/* View All Projects Button (modal to be added) */}
-      <div className="mt-8">
-        <button
-          className="bg-blue-300 hover:bg-blue-400 text-black font-semibold px-12 py-5 rounded shadow transition"
-          onClick={() => setShowModal(true)}
-        >
-          View All Projects →
-        </button>
-      </div>
-      {/* Modal Overlay */}
-      {showModal && (
-        <div  className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 p-4">
-          <div
-            ref={modalRef}
-            className="relative bg-white rounded-xl shadow-2xl p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto"
-          >
-            <button
-              className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-800 font-bold"
-              onClick={() => setShowModal(false)}
-              aria-label="Close Modal"
-            >
-              &times;
-            </button>
-            <h2 className="text-3xl font-bold text-center mb-8 text-black">All Projects</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {projectsData.map((project) => (
-                <div key={project.title} className="bg-gray-100 rounded-lg p-4 flex flex-col items-center shadow hover:shadow-lg transition-shadow">
+          </motion.div>
+        )}
+
+        {/* Projects Grid */}
+        <motion.div className="projects-grid" layout>
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project.id}
+                className="project-card"
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="project-card-img-wrap">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-40 object-cover rounded mb-4 border border-gray-300"
+                    className="project-card-img"
                   />
-                  <h3 className="text-lg font-semibold mb-3 text-black text-center">{project.title}</h3>
-                 
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full">
-                    <button className="w-full bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded transition font-semibold">Visit →</button>
-                  </a>
+                  <div className="project-card-overlay" />
                 </div>
-              ))}
-            </div>
-          </div>
+
+                <div className="project-card-content">
+                  <div>
+                    <span className="project-card-category">{project.category}</span>
+                    <h4 className="project-card-title">{project.title}</h4>
+                    <p className="project-card-desc">{project.description}</p>
+                  </div>
+
+                  <div className="project-card-footer">
+                    <div className="flex flex-wrap gap-1.5 max-w-[65%]">
+                      {project.tech.slice(0, 2).map((t) => (
+                        <span key={t} className="text-[0.7rem] text-slate-300 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/50">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="card-visit-link"
+                    >
+                      Visit →
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* View All Projects Button */}
+        <div className="view-all-container">
+          <button className="view-all-btn" onClick={() => setShowModal(true)}>
+            View All {projectsData.length} Projects Showcase →
+          </button>
         </div>
-      )}
+
+        {/* Glass Modal Dialog */}
+        <AnimatePresence>
+          {showModal && (
+            <motion.div
+              className="projects-modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowModal(false)}
+            >
+              <motion.div
+                className="projects-modal-content"
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="modal-close-btn"
+                  onClick={() => setShowModal(false)}
+                  aria-label="Close modal"
+                >
+                  &times;
+                </button>
+
+                <div className="modal-header">
+                  <h3 className="modal-title">All Project Highlights</h3>
+                  <p className="modal-subtitle">
+                    Complete portfolio showcase across corporate systems, e-commerce stores, and web applications.
+                  </p>
+                </div>
+
+                <div className="modal-grid">
+                  {projectsData.map((project) => (
+                    <div key={project.id} className="project-card">
+                      <div className="project-card-img-wrap">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="project-card-img"
+                        />
+                        <div className="project-card-overlay" />
+                      </div>
+                      <div className="project-card-content">
+                        <div>
+                          <span className="project-card-category">{project.category}</span>
+                          <h4 className="project-card-title">{project.title}</h4>
+                        </div>
+                        <div className="project-card-footer">
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="card-visit-link"
+                          >
+                            Live Demo →
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 }
 
 export default Projects;
+

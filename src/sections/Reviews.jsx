@@ -48,30 +48,25 @@ export default function Reviews() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    // Comment out the API call for now to use fake data
-    // fetch(API_URL)
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setReviews(data);
-    //     setLoading(false);
-    //   })
-    //   .catch(() => setLoading(false));
+    // Default reviews loaded from local state
   }, []);
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setMessage('');
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      setMessage(data.message || 'Thank you for your review!');
+      const newReview = {
+        id: Date.now(),
+        name: form.name,
+        comment: form.comment,
+        approved: true,
+        createdAt: new Date().toISOString(),
+      };
+      setReviews((prev) => [newReview, ...prev]);
+      setMessage('Thank you for your review!');
       setForm({ name: '', email: '', comment: '' });
     } catch {
       setMessage('There was an error submitting your review.');
