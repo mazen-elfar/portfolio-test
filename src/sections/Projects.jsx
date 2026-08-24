@@ -59,6 +59,17 @@ const projectsData = [
     featured: false,
   },
   {
+  id: "bundle-builder",
+  title: "Bundle Builder",
+  category: "E-Commerce",
+  image: "/images/bundelbulder.png",
+  description:
+    "A production-style bundle builder recreated from Figma using React and TypeScript, with reusable components, interactive product selection, variant and quantity controls, multi-step configuration, and responsive Tailwind CSS layouts.",
+  link: "https://bundle-builder-three.vercel.app/",
+  tech: ["React", "TypeScript", "Tailwind CSS", "Figma", "Responsive UI"],
+  featured: true,
+},
+  {
     id: "gym-website",
     title: "Fitness & Training Hub",
     category: "Web App",
@@ -90,7 +101,7 @@ const projectsData = [
     link: "https://mazen-elfar.github.io/GYM/",
     tech: ["JavaScript", "CSS3", "Mobile First", "UI/UX"],
     featured: false,
-  },
+  }
 ];
 
 const categories = ["All", "Corporate", "E-Commerce", "Web App"];
